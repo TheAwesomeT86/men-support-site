@@ -1,0 +1,37 @@
+backend:
+  name: git-gateway
+  branch: main
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+site_url: "https://menempowermentsupport.netlify.app"
+logo_url: "/assets/logo.svg"
+
+collections:
+  - label: "Executive Members"
+    name: "members"
+    files:
+      - label: "Members Data"
+        name: "membersData"
+        file: "assets/data/members.json"
+        format: "json"
+        fields:
+          - label: "Members"
+            name: "members"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.role}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Role", name: "role", widget: "string" }
+              - { label: "Bio", name: "bio", widget: "text" }
+              - { label: "Photo URL", name: "photo", widget: "string" }
+
+  - label: "Blog"
+    name: "blog"
+    folder: "blog/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Summary", name: "summary", widget: "text", required: false }
+      - { label: "Body", name: "body", widget: "markdown" }

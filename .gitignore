@@ -1,0 +1,18 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node (in case future tooling is added)
+node_modules/
+.dist/
+.build/
+.cache/
+
+# IDE
+.vscode/
+.idea/

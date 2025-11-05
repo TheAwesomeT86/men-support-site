@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://menempowermentsupport.netlify.app/sitemap.xml

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="60" viewBox="0 0 220 60" fill="none">
+  <rect width="220" height="60" rx="10" fill="#0a0a0a"/>
+  <circle cx="30" cy="30" r="18" fill="#f97316"/>
+  <path d="M30 17 L38 30 L30 43 L22 30 Z" fill="#0a0a0a"/>
+  <text x="60" y="37" fill="#ffffff" font-size="22" font-family="Segoe UI, Roboto, Arial" font-weight="700">MEN SUPPORT</text>
+</svg>
