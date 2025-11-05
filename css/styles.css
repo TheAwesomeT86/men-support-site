@@ -39,6 +39,9 @@ body {
 .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; padding: 36px 0; }
 .feature { background: var(--muted); padding: 18px; border-radius: 14px; border: 1px solid #e6e6e7; box-shadow: 0 4px 12px rgba(0,0,0,0.04); transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; position: relative; overflow: hidden; }
 .feature::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; background: linear-gradient(90deg, var(--orange), #ff9a3d); }
+.features .feature:nth-child(2) { background: #0f0f10; color: var(--white); border-color: #1f1f20; }
+.features .feature:nth-child(2)::before { background: linear-gradient(90deg, #ff9a3d, var(--orange)); }
+.features .feature:nth-child(3) { background: #ffffff; border-color: #ebebec; }
 .feature:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.08); border-color: #e0e0e1; }
 .feature h3 { margin: 0 0 6px; }
 
@@ -58,9 +61,18 @@ body {
 .grid.three { grid-template-columns: repeat(3, 1fr); }
 .card { background: var(--muted); border-radius: 14px; padding: 16px; border: 1px solid #e6e6e7; box-shadow: 0 4px 12px rgba(0,0,0,0.04); transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; position: relative; overflow: hidden; }
 .card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; background: linear-gradient(90deg, var(--orange), #ff9a3d); }
+.card.dark { background: #0f0f10; color: var(--white); border-color: #1f1f20; }
+.card.dark p { color: #d1d5db; }
+.card.alt { background: #ffffff; border-color: #ebebec; }
+.card.alt::before { background: linear-gradient(90deg, #ff9a3d, var(--orange)); }
+.card.strip-left::before { inset: 0 auto 0 0; width: 4px; height: auto; }
 .card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.08); border-color: #e0e0e1; }
 .card h3 { margin-top: 2px; }
 .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; }
+
+@media (min-width: 900px) {
+  .grid.three .card.wide { grid-column: span 2; }
+}
 
 form { display: grid; gap: 12px; max-width: 560px; }
 label { font-weight: 600; }
