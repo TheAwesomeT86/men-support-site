@@ -12,15 +12,63 @@
   <body>
     <!-- Decap CMS root container -->
     <div id="nc-root"></div>
+    <!-- Simple PIN gate overlay -->
+    <div id="pin-gate" style="position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.6); z-index:9999;">
+      <div style="background:#fff; color:#111; padding:20px; border-radius:12px; width:320px; box-shadow:0 10px 30px rgba(0,0,0,0.2); text-align:center;">
+        <h3 style="margin:0 0 10px;">Admin Access</h3>
+        <p style="margin:0 0 12px; font-size:14px; color:#555;">Enter 4-digit code</p>
+        <input id="pin-input" type="password" inputmode="numeric" maxlength="4" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; text-align:center; font-size:18px; letter-spacing:6px;" />
+        <div id="pin-error" style="height:18px; color:#b91c1c; font-size:12px; margin-top:8px;"></div>
+        <button id="pin-submit" style="margin-top:12px; width:100%; padding:10px; background:#f97316; color:#111; border:none; border-radius:8px; font-weight:700; cursor:pointer;">Unlock</button>
+      </div>
+    </div>
     <noscript>This page requires JavaScript to run the CMS.</noscript>
     <p style="text-align:center; margin-top:12px;">
       <button id="loginBtn" style="padding:8px 12px; border-radius:8px; border:1px solid #ddd; cursor:pointer;">Log in</button>
     </p>
     <script>
-      // Initialize CMS after DOM is ready to ensure #nc-root exists
-      document.addEventListener('DOMContentLoaded', function () {
+      // --- Simple PIN gate (client-side only) ---
+      const PIN_KEY = 'admin_pin_ok_v1';
+      const REQUIRED_PIN = '2468'; // TODO: change to your 4-digit code
+
+      function showPinGate() {
+        const gate = document.getElementById('pin-gate');
+        if (gate) gate.style.display = 'flex';
+      }
+      function hidePinGate() {
+        const gate = document.getElementById('pin-gate');
+        if (gate) gate.style.display = 'none';
+      }
+      function initCMS() {
         if (window.CMS && typeof window.CMS.init === 'function') {
           window.CMS.init();
+        }
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        const ok = localStorage.getItem(PIN_KEY) === '1';
+        if (!ok) {
+          showPinGate();
+        } else {
+          initCMS();
+        }
+
+        const submit = document.getElementById('pin-submit');
+        const input = document.getElementById('pin-input');
+        const err = document.getElementById('pin-error');
+        if (submit && input) {
+          submit.addEventListener('click', function () {
+            const val = (input.value || '').trim();
+            if (val === REQUIRED_PIN) {
+              localStorage.setItem(PIN_KEY, '1');
+              hidePinGate();
+              initCMS();
+            } else {
+              if (err) err.textContent = 'Incorrect code';
+            }
+          });
+          input.addEventListener('keyup', function (e) {
+            if (e.key === 'Enter') submit.click();
+          });
         }
       });
 
