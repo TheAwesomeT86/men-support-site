@@ -6,10 +6,15 @@
     <title>Admin | MEN Support</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.9.0/dist/decap-cms.js"></script>
   </head>
   <body>
-    <!-- Decap CMS will mount automatically -->
+    <!-- Decap CMS root container -->
+    <div id="nc-root"></div>
+    <noscript>This page requires JavaScript to run the CMS.</noscript>
+    <p style="text-align:center; margin-top:12px;">
+      <button id="loginBtn" style="padding:8px 12px; border-radius:8px; border:1px solid #ddd; cursor:pointer;">Log in</button>
+    </p>
     <script>
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on('init', (user) => {
@@ -23,6 +28,11 @@
         });
         // Initialize in case it hasn't yet
         window.netlifyIdentity.init();
+      }
+      // Fallback login button
+      const btn = document.getElementById('loginBtn');
+      if (btn && window.netlifyIdentity) {
+        btn.addEventListener('click', () => window.netlifyIdentity.open());
       }
     </script>
   </body>
