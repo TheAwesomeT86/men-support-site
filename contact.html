@@ -42,8 +42,11 @@
         <label for="message">Message</label>
         <textarea id="message" name="message" required></textarea>
       </div>
+      <!-- Honeypot field (spam protection) -->
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
       <button type="submit">Send Message</button>
     </form>
+    <div id="form-status" class="lead" style="margin-top:10px"></div>
   </main>
 
   <footer class="site-footer">
@@ -62,5 +65,37 @@
     <div class="footnote">© <span id="year"></span> Men Empowerment Network Support. All rights reserved.</div>
   </footer>
   <script src="js/main.js"></script>
+  <script>
+    (function(){
+      const form = document.getElementById('contact-form');
+      const status = document.getElementById('form-status');
+      if (!form) return;
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+        status.textContent = 'Sending...';
+        const data = new FormData(form);
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            body: data
+          });
+          if (res.ok) {
+            status.textContent = 'Thanks! Your message has been sent.';
+            form.reset();
+          } else {
+            let msg = 'Submission failed. Please try again later.';
+            try {
+              const json = await res.json();
+              if (json && json.errors) msg = json.errors.map(e => e.message).join(', ');
+            } catch(_){}
+            status.textContent = msg;
+          }
+        } catch(err) {
+          status.textContent = 'Network error. Please check your connection and try again.';
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
