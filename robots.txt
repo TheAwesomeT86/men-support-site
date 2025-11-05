@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mens246.netlify.app/sitemap.xml
+Sitemap: https://theawesomet86.github.io/men-support-site/sitemap.xml
