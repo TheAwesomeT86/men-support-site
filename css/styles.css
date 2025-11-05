@@ -1,9 +1,10 @@
 :root {
   --black: #0a0a0a;
-  --orange: #f97316;
+  /* MEN brand orange */
+  --orange: #f47a1f;
   --white: #ffffff;
-  --muted: #f5f5f5;
-  --text: #1f2937;
+  --muted: #f4f4f5;
+  --text: #111111;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -20,15 +21,15 @@ body {
 .brand { display: flex; gap: 10px; align-items: center; color: var(--white); text-decoration: none; font-weight: 700; }
 .brand img { height: 36px; width: auto; }
 .nav { display: flex; gap: 18px; align-items: center; }
-.nav a { color: var(--white); text-decoration: none; opacity: 0.9; }
-.nav a:hover { opacity: 1; }
+.nav a { color: var(--white); text-decoration: none; opacity: 0.9; transition: color .15s ease, opacity .15s ease; }
+.nav a:hover { opacity: 1; color: var(--orange); }
 
-.btn { display: inline-block; padding: 10px 16px; border-radius: 8px; border: 2px solid var(--white); color: var(--white); text-decoration: none; font-weight: 600; }
+.btn { display: inline-block; padding: 10px 16px; border-radius: 8px; border: 2px solid var(--white); color: var(--white); text-decoration: none; font-weight: 600; transition: filter .15s ease, box-shadow .15s ease, color .15s ease, border-color .15s ease; }
 .btn-primary { background: var(--orange); border-color: var(--orange); color: var(--black); }
 .btn-outline { background: transparent; }
-.btn-primary:hover { filter: brightness(0.95); }
+.btn-primary:hover { filter: brightness(0.95); box-shadow: 0 4px 14px rgba(244, 122, 31, 0.35); }
 
-.hero { background: linear-gradient(180deg, var(--black), #171717); color: var(--white); position: relative; overflow: hidden; }
+.hero { background: linear-gradient(180deg, var(--black), #121212); color: var(--white); position: relative; overflow: hidden; }
 .hero-inner { padding: 80px 0; }
 .hero h1 { font-size: 42px; margin: 0 0 14px; }
 .hero p { max-width: 700px; margin: 0 0 22px; opacity: 0.95; }
