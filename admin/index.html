@@ -42,6 +42,23 @@
       if (btn && window.netlifyIdentity) {
         btn.addEventListener('click', () => window.netlifyIdentity.open());
       }
+
+      // Defensive: if Decap's login button renders but doesn't open the modal, wire it up
+      const wireDecapLogin = () => {
+        const candidates = Array.from(document.querySelectorAll('button, a'));
+        const decapBtn = candidates.find(el => /login with netlify identity/i.test(el.textContent || ''));
+        if (decapBtn && window.netlifyIdentity && !decapBtn.__wired) {
+          decapBtn.addEventListener('click', (e) => {
+            try { e.preventDefault(); } catch(_){}
+            window.netlifyIdentity.open('login');
+          }, { capture: true });
+          decapBtn.__wired = true;
+        }
+      };
+      // Try now and also observe future DOM changes
+      wireDecapLogin();
+      const obs = new MutationObserver(() => wireDecapLogin());
+      obs.observe(document.body, { childList: true, subtree: true });
     </script>
   </body>
 </html>
