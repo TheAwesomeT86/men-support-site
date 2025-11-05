@@ -42,6 +42,10 @@ body {
 .feature:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.08); border-color: #e0e0e1; }
 .feature h3 { margin: 0 0 6px; }
 
+/* Icon styling */
+.icon { width: 28px; height: 28px; color: var(--orange); display: inline-block; margin-right: 8px; vertical-align: -6px; }
+.icon.block { display: block; margin: 0 0 10px; width: 36px; height: 36px; }
+
 .cta { text-align: center; padding: 40px 0 60px; }
 .cta h2 { margin-bottom: 8px; }
 
