@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://menempowermentsupport.netlify.app/sitemap.xml
+Sitemap: https://mens246.netlify.app/sitemap.xml

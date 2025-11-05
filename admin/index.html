@@ -5,9 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin | MEN Support</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   </head>
   <body>
     <!-- Decap CMS will mount automatically -->
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', (user) => {
+          if (!user) {
+            // Open the login/signup modal automatically on first visit
+            window.netlifyIdentity.open();
+            window.netlifyIdentity.on('login', () => {
+              document.location.href = '/admin/';
+            });
+          }
+        });
+        // Initialize in case it hasn't yet
+        window.netlifyIdentity.init();
+      }
+    </script>
   </body>
 </html>

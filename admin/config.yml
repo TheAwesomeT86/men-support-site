@@ -3,7 +3,7 @@ backend:
   branch: main
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
-site_url: "https://menempowermentsupport.netlify.app"
+site_url: "https://mens246.netlify.app"
 logo_url: "/assets/logo.svg"
 
 collections:
