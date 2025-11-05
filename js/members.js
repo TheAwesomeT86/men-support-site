@@ -1,6 +1,6 @@
 async function loadMembers() {
   try {
-    const res = await fetch('/assets/data/members.json', { cache: 'no-store' });
+    const res = await fetch('assets/data/members.json', { cache: 'no-store' });
     const data = await res.json();
     const grid = document.getElementById('members-grid');
     grid.innerHTML = '';
