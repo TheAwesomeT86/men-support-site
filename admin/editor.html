@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MEN Support | Admin Editor</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <style>
+    body{font-family: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; margin:0; background:#f6f7f9; color:#111}
+    .wrap{max-width: 980px; margin: 20px auto; padding: 0 16px}
+    .card{background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:16px;}
+    .row{display:flex; gap:12px; align-items:center}
+    input,textarea,button{font:inherit}
+    input,textarea{width:100%; padding:10px; border:1px solid #e5e7eb; border-radius:8px}
+    textarea{min-height:360px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}
+    button{padding:10px 14px; border:none; border-radius:8px; background:#f97316; color:#111; font-weight:700; cursor:pointer}
+    .muted{color:#6b7280}
+    .ok{color:#057a55}
+    .err{color:#b91c1c}
+    .grid{display:grid; gap:12px}
+    @media(min-width:900px){.grid.two{grid-template-columns: 1fr 1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Admin Editor</h1>
+    <p class="muted">PIN-protected JSON editor for site content. Use carefully.</p>
+
+    <div class="card grid two">
+      <div>
+        <label>4-digit PIN</label>
+        <input id="pin" type="password" inputmode="numeric" maxlength="6" placeholder="Enter admin PIN">
+        <div class="muted" id="status"></div>
+      </div>
+      <div>
+        <label>Target file path (in repo)</label>
+        <input id="path" value="assets/data/members.json">
+        <div class="muted">Examples: assets/data/members.json, assets/data/blog.json</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <div class="row" style="justify-content: space-between;">
+        <strong>File contents</strong>
+        <div>
+          <button id="load">Load</button>
+          <button id="format">Format</button>
+          <button id="save">Save</button>
+        </div>
+      </div>
+      <textarea id="content" placeholder="JSON content will appear here"></textarea>
+      <div id="msg" class="muted" style="margin-top:8px"></div>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <strong>Preview helpers</strong>
+      <div class="row">
+        <button id="openMembers">Open Members page</button>
+        <button id="openBlog">Open Blog</button>
+        <a href="/" style="margin-left:auto; text-decoration:none">← Back to site</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const el = id => document.getElementById(id);
+    const status = el('status');
+    const msg = el('msg');
+    function setMsg(text, kind='') { msg.textContent = text; msg.className = kind || 'muted'; }
+
+    async function loadFile() {
+      setMsg('Loading...');
+      const p = el('path').value.trim();
+      try {
+        const res = await fetch('/' + p + '?_=' + Date.now());
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const text = await res.text();
+        el('content').value = text;
+        setMsg('Loaded', 'ok');
+      } catch (e) { setMsg('Load failed: ' + e.message, 'err'); }
+    }
+
+    function formatJSON() {
+      try {
+        const obj = JSON.parse(el('content').value);
+        el('content').value = JSON.stringify(obj, null, 2);
+        setMsg('Formatted', 'ok');
+      } catch (e) { setMsg('Invalid JSON: ' + e.message, 'err'); }
+    }
+
+    async function saveFile() {
+      const p = el('path').value.trim();
+      const pin = el('pin').value.trim();
+      const content = el('content').value;
+      if (!pin) { setMsg('Enter PIN', 'err'); return; }
+      try {
+        setMsg('Saving...');
+        const res = await fetch('/.netlify/functions/update-file', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-Admin-Pin': pin },
+          body: JSON.stringify({ path: p, content })
+        });
+        const text = await res.text();
+        if (!res.ok) throw new Error(text || ('HTTP ' + res.status));
+        setMsg('Saved', 'ok');
+      } catch (e) { setMsg('Save failed: ' + e.message, 'err'); }
+    }
+
+    el('load').addEventListener('click', loadFile);
+    el('format').addEventListener('click', formatJSON);
+    el('save').addEventListener('click', saveFile);
+
+    el('openMembers').addEventListener('click', () => window.open('/members.html', '_blank'));
+    el('openBlog').addEventListener('click', () => window.open('/blog/', '_blank'));
+
+    // Auto-load default file
+    loadFile();
+  </script>
+</body>
+</html>
