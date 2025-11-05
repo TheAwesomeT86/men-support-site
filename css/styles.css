@@ -19,7 +19,7 @@ body {
 .site-header { position: sticky; top: 0; background: var(--black); color: var(--white); z-index: 20; }
 .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
 .brand { display: flex; gap: 10px; align-items: center; color: var(--white); text-decoration: none; font-weight: 700; }
-.brand img { height: 36px; width: auto; }
+.brand img { height: 44px; width: auto; border-radius: 50%; background: var(--white); box-shadow: 0 0 0 2px var(--white); }
 .nav { display: flex; gap: 18px; align-items: center; }
 .nav a { color: var(--white); text-decoration: none; opacity: 0.9; transition: color .15s ease, opacity .15s ease; }
 .nav a:hover { opacity: 1; color: var(--orange); }
