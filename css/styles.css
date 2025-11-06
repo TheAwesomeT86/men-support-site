@@ -104,8 +104,8 @@ body {
 
 .tile.wide { grid-column: span 6; }
 .tile.full { grid-column: 1 / -1; }
-.tile.tall { --h: 38; }
-.tile.short { --h: 18; }
+.tile.tall { --h: 32; }
+.tile.short { --h: 16; }
 
 .tile.dark { background: #0f0f10; color: var(--white); border-color: #1f1f20; }
 .tile.dark p { color: #d1d5db; }
@@ -113,6 +113,13 @@ body {
 
 .tile.circle { border-radius: 9999px; display: flex; align-items: center; justify-content: center; text-align: center; }
 .tile.pill { border-radius: 9999px; }
+
+/* Tile photos */
+.tile .photo { height: 130px; border-radius: 12px; overflow: hidden; margin-bottom: 10px; background: #e5e7eb; }
+.tile.tall .photo { height: 160px; }
+.tile.short .photo { height: 110px; }
+.tile.wide .photo { height: 150px; }
+.tile .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 @media (max-width: 900px) {
   .mosaic { grid-template-columns: repeat(6, minmax(0,1fr)); }
