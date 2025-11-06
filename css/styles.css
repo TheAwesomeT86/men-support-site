@@ -97,10 +97,14 @@ body {
   padding: 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.04);
   transition: transform .18s ease, box-shadow .18s ease;
+  height: calc(var(--h) * 10px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 .tile:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.08); }
-.tile h3 { margin: 0 0 6px; }
-.tile p { margin: 0; color: #6b7280; }
+.tile h3 { margin: 0 0 6px; flex: 0 0 auto; }
+.tile p { margin: 0; color: #6b7280; flex: 1 1 auto; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 
 .tile.wide { grid-column: span 6; }
 .tile.full { grid-column: 1 / -1; }
@@ -115,11 +119,13 @@ body {
 .tile.pill { border-radius: 9999px; }
 
 /* Tile photos */
-.tile .photo { height: 130px; border-radius: 12px; overflow: hidden; margin-bottom: 10px; background: #e5e7eb; }
+.tile .photo { height: 130px; border-radius: 12px; overflow: hidden; margin-bottom: 10px; background: #e5e7eb; flex: 0 0 auto; }
 .tile.tall .photo { height: 160px; }
 .tile.short .photo { height: 110px; }
 .tile.wide .photo { height: 150px; }
 .tile .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Safety for any stray images */
+.tile img { max-width: 100%; height: auto; display: block; }
 
 @media (max-width: 900px) {
   .mosaic { grid-template-columns: repeat(6, minmax(0,1fr)); }
